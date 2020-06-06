@@ -12,6 +12,7 @@
     "sequelize-cli": "^5.5.1"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "sequelize db:migrate"
   }
 }
