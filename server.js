@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.post('/results', async (req, res) => {
+    const {results} = req.body;
     await db.survey.create({results});
     res.send({status: 'ok'});
 });
