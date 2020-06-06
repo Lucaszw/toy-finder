@@ -8,6 +8,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js" integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FastActive/1.0.1/FastActive.min.js" integrity="sha256-M7N62DIuIJyoCYW/hQsxb4CNnIzFf3dBD5s9oi6ol3c=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+        <script src="/api.js"></script>
         <meta name='viewport' content='width=device-width, initial-scale=0, maximum-scale=0, user-scalable=0' />
     </head>
     <body>
@@ -127,7 +128,7 @@
             const eq = _.spread(_.eq);
             const intersection = compare(eq);
 
-            function calculateFavouriteToy() {
+            async function calculateFavouriteToy() {
                 let maxScore = 0;
                 let possibleToys = {};
                 _.each(toyCategories, (categories, toy) => {
@@ -141,6 +142,7 @@
                 let name = toyFullNames[bestToy];
                 bestToyContainer.innerHTML = name;
                 imgContainer.src = `/toys/${bestToy}.png`;
+                let results = await API.postResults(favouriteToys);
             }
 
             function surveyComplete() {
@@ -176,7 +178,6 @@
                 }
                 answerBtns.onclick(function(btn) {
                     favouriteToys.push(btn.innerHTML);
-                    console.log(btn.innerHTML);
                     loadNextQuestion();
                 });
 
