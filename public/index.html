@@ -1,0 +1,195 @@
+<html>
+    <head>
+        <title>Find your perfect toy</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/buttons.css">
+        <link rel="stylesheet" href="/wave.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js" integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FastActive/1.0.1/FastActive.min.js" integrity="sha256-M7N62DIuIJyoCYW/hQsxb4CNnIzFf3dBD5s9oi6ol3c=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+        <meta name='viewport' content='width=device-width, initial-scale=0, maximum-scale=0, user-scalable=0' />
+    </head>
+    <body>
+        <div id="main">
+            <div id="pre-survey">
+                <div class="header">Welcome to toy finder!</div>
+                <div class="info" >We will determine the ultimate toy for you after answering the following questions</div>
+                <div id="begin-btn" class="begin-btn">Begin</div>
+            </div>
+            <div id="survey" class="container alpha">
+                <div class="header"> Which of these toys do you prefer? </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div id="leftAnswer" class="answer-btn btn btn-secondary"> Robotics Toys </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="rightAnswer" class="answer-btn btn btn-tertiary""> Soft Toys </div>
+                    </div>
+                </div>
+            </div>
+            <div id="congrats">
+                <div class="info">Congrats! We have determined your perfect toy to be:</div>
+                <div class="header" id="best-toy">Your imagination!</div>
+                <img id="toy-img">
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <canvas id="confetti-canvas"></canvas>
+        </div>
+
+        <div class="waveWrapper waveAnimation">
+            <div class="waveWrapperInner bgTop">
+                <div class="wave waveTop" style="background-image: url('/wave-top.png')"></div>
+            </div>
+            <div class="waveWrapperInner bgMiddle">
+                <div class="wave waveMiddle" style="background-image: url('/wave-mid.png')"></div>
+            </div>
+            <div class="waveWrapperInner bgBottom">
+                <div class="wave waveBottom" style="background-image: url('/wave-bot.png')"></div>
+            </div>
+        </div>
+
+        <script>
+            let toyTypes = ["Action Figures", "Animals", "Cars", "Creative Toys", "Dolls", "Educational Toys", "Electronic Toys", "Video Games", "Model Building", "Puzzles", "Science", "Wooden Toys"];
+            let toyCategories = {
+                baby: ["Dolls"],
+                batman: ["Action Figures", "Cars"],
+                beyblade: ["Action Figures", "Model Building"],
+                doll: ["Dolls", "Action Figures"],
+                dollhouse: ["Dolls", "Model Building"],
+                dragon: ["Action Figures", "Animals"],
+                elephant: ["Dolls", "Animals"],
+                frozen: ["Action Figures", "Dolls", "Model Building"],
+                genius: ["Creative Toys", "Educational Toys", "Puzzles", "Science", "Electronic Toys", "Video Games"],
+                hatchimals: ["Animals", "Dolls", "Model Building"],
+                jet: ["Action Figures", "Cars", "Model Building"],
+                kitchen: ["Model Building"],
+                lumies: ["Animals", "Electronic Toys"],
+                mrpotatoe: ["Action Figures", "Electronic Toys"],
+                playdoh: ["Creative Toys"],
+                safe: ["Creative Toys"],
+                scooter: ["Cars"],
+                shuttle: ["Action Figures", "Cars", "Creative Toys", "Model Building", "Science"],
+                skates: ["Cars", "Dolls"],
+                snapstar: ["Dolls", "Action Figures"],
+                switch: ["Video Games", "Electronic Toys"]
+            };
+            let toyFullNames = {
+                baby: "Cry Babies Kristal Interactive Baby Doll",
+                batman: "Imaginext DC Super Friends Transforming Batmobile R/C",
+                beyblade: "Hasbro Beyblade Burst Turbo Championship Clash Battle Set",
+                doll: "American Girl Joss Kendrick, 2020 Girl of the Year",
+                dollhouse: ["Dolls", "Model Building"],
+                dragon: "Spin Master How to Train Your Dragon Hatching Toothless",
+                elephant: "Spin Master Wildluvs Juno My Baby Elephant",
+                frozen: "Playmobil Crystal Palace",
+                genius: "Osmo Genius Starter Kit",
+                hatchimals: "Hatchimals Mega Secret Surprise Egg",
+                jet: "Paw Patrol Mighty Jet Command Center",
+                kitchen: "Little Tikes Tasty Jr. Bake 'n Share Kitchen",
+                lumies: "Skyrocket Pomsies Lumies",
+                mrpotatoe: "Playskool Mr. Potato Head Movin' Lips",
+                playdoh: "Play-Doh Kitchen Creations Popcorn Party Play Food Set",
+                safe: "Just Play Ryan's World Super Surprise Safe",
+                scooter: "Razor Power A2 Electric Scooter",
+                shuttle: "Lego Mars Research Shuttle",
+                skates: "Circle Society JoJo Siwa Roller Skates",
+                snapstar: "Yulu #SNAPSTAR Pop Royalty: Echo's Debut on the Pink Carpet",
+                switch: "Nintendo Switch and Switch Lite"
+            }
+            let preSurvery = document.querySelector("#pre-survey");
+            let survey = document.querySelector("#survey");
+            let congrats = document.querySelector("#congrats");
+            let bestToyContainer = document.querySelector("#best-toy");
+            let beginBtn = document.querySelector("#begin-btn");
+            let answerBtns = document.querySelectorAll(".answer-btn");
+            let progressBar = document.querySelector(".progress-bar");
+            let confettiElement = document.querySelector('#confetti-canvas');
+            let imgContainer = document.querySelector("#toy-img");
+
+            let percent = 0;
+            let favouriteToys = [];
+            progressBar.setProgress = (percent) => {
+                percent = parseInt(percent);
+                progressBar.style.width = `${percent}%`;
+                progressBar.setAttribute("aria-valuenow", percent);
+                return percent;
+            }
+
+            answerBtns.onclick = (fcn) => {for (let btn of answerBtns) {btn.onclick = () => {fcn(btn);}}}
+            const compare = (comperator) => (arr1, arr2) => 
+                _.zip(arr1, arr2)
+                .filter(comperator)
+                .map(_.last);
+
+            const eq = _.spread(_.eq);
+            const intersection = compare(eq);
+
+            function calculateFavouriteToy() {
+                let maxScore = 0;
+                let possibleToys = {};
+                _.each(toyCategories, (categories, toy) => {
+                    let score = intersection(categories, favouriteToys).length;
+                    if (score > maxScore) maxScore = score;
+                    if (!possibleToys[score]) possibleToys[score] = []
+                    possibleToys[score].push(toy);
+                });
+                let index = Math.floor(Math.random()*maxScore);
+                let bestToy = possibleToys[maxScore][index] || possibleToys[maxScore][index-1];
+                let name = toyFullNames[bestToy];
+                bestToyContainer.innerHTML = name;
+                imgContainer.src = `/toys/${bestToy}.png`;
+            }
+
+            function surveyComplete() {
+                displayConfetti();
+                calculateFavouriteToy();
+                survey.style.display = "none";
+                congrats.style.display = "block";
+                preSurvery.style.display = "none";
+            }
+
+            function loadNextQuestion() {
+                let questionIndex = Math.floor(Math.random()*toyTypes.length);
+                let question1 = toyTypes[questionIndex];
+                let remainingTypes = _.without(toyTypes, question1);
+                let question2 = remainingTypes[Math.floor(Math.random()*(toyTypes.length-1))];
+
+                answerBtns[0].innerHTML = question1;
+                answerBtns[1].innerHTML = question2;
+
+                percent += 25;
+                progressBar.setProgress(percent);
+                if (percent >= 100)
+                    surveyComplete();
+            }
+
+            function init() {
+                survey.style.display = "none";
+                congrats.style.display = "none";
+                beginBtn.onclick = () => {
+                    loadNextQuestion();
+                    preSurvery.style.display = "none";
+                    survey.style.display = "block";
+                }
+                answerBtns.onclick(function(btn) {
+                    favouriteToys.push(btn.innerHTML);
+                    console.log(btn.innerHTML);
+                    loadNextQuestion();
+                });
+
+                progressBar.setProgress(0);
+            }
+            init();
+
+            function displayConfetti(options={clock: 100, max: 300, size: 2, respawn: false }) {
+                options.target = confettiElement;
+                var confetti = new ConfettiGenerator(options);
+                confetti.render();
+            }
+
+        </script>
+    </body>
+</html>

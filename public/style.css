@@ -1,0 +1,128 @@
+body {
+    background: #f0fff6 !important;
+}
+
+#main {
+    z-index: 100000000;
+    min-width: 945px;
+    position: fixed;
+    top: 50%;
+    margin-top: -400px;
+}
+
+.header {
+    /* background: #d13faf;; */
+    color: #d13faf;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 60px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.container {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+    position: fixed;
+    top: 50%;
+    margin-top: -127px;
+    width: 100% !important;
+    text-align: center;
+    left: 10px;
+}
+.info {
+    /* background:  */
+    color: #8b4caf;
+    text-align: center;
+    margin: 20px 40px;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 60px;
+    font-family: monospace;
+}
+
+.begin-btn {
+    background: red;
+    color: white;
+    text-align: center;
+    margin: 20px 300px;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 50px;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.answer-btn {
+    width: 100%;
+    font-size: 54px !important;
+    height: 100%;
+}
+
+#survey {
+    position: fixed;
+    height: 100%;
+}
+section {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.progress {
+    position: fixed;
+    bottom: 2px;
+    width: 100%;
+    height: 20px !important;
+}
+
+#confetti-canvas {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#congrats {
+    display: block;
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    margin-top: -400px;
+}
+#congrats .info {
+    /* background: #b8b8b8; */
+    color: black;
+    text-align: center;
+    margin: 20px 40px;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 50px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+#congrats .header {
+    background: red;
+    color: white;
+}
+
+#toy-img {
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    position: absolute;
+    margin-left: -197px;
+}
