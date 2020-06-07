@@ -1,6 +1,7 @@
 # toy-finder
-https://toy-finder.herokuapp.com/
-https://github.com/Lucaszw/toy-finder/blob/master/The%20Future%20of%20Kids%20Retail%20-%20Zeer.pdf
+Webapp: https://toy-finder.herokuapp.com/
+
+Presentation: https://github.com/Lucaszw/toy-finder/blob/master/The%20Future%20of%20Kids%20Retail%20-%20Zeer.pdf
 
 ## Engaging Survey for Kids to help determine market trends
 
