@@ -4,10 +4,11 @@ body {
 
 #main {
     z-index: 100000000;
-    min-width: 945px;
+    /* min-width: 945px; */
     position: fixed;
-    top: 50%;
-    margin-top: -400px;
+    /* top: 50%; */
+    /* margin-top: -400px; */
+    width: 100%;
 }
 
 .header {
@@ -17,7 +18,7 @@ body {
     margin: 20px;
     padding: 20px;
     border-radius: 20px;
-    font-size: 60px;
+    font-size: 30px;
     font-family: monospace;
     font-weight: bold;
 }
@@ -32,7 +33,6 @@ body {
     margin-right: 0px;
     position: fixed;
     top: 50%;
-    margin-top: -127px;
     width: 100% !important;
     text-align: center;
     left: 10px;
@@ -41,10 +41,10 @@ body {
     /* background:  */
     color: #8b4caf;
     text-align: center;
-    margin: 20px 40px;
-    padding: 20px;
+    /* margin: 20px 40px; */
+    padding: 10px;
     border-radius: 20px;
-    font-size: 60px;
+    font-size: 20px;
     font-family: monospace;
 }
 
@@ -52,17 +52,17 @@ body {
     background: red;
     color: white;
     text-align: center;
-    margin: 20px 300px;
+    margin: 20px 40px;
     padding: 20px;
     border-radius: 20px;
-    font-size: 50px;
+    font-size: 20px;
     font-family: monospace;
     cursor: pointer;
 }
 
 .answer-btn {
     width: 100%;
-    font-size: 54px !important;
+    font-size: 14px !important;
     height: 100%;
 }
 
@@ -97,9 +97,9 @@ section {
 #congrats {
     display: block;
     position: fixed;
-    top: 50%;
+    /* top: 50%; */
     width: 100%;
-    margin-top: -400px;
+    /* margin-top: -400px; */
 }
 #congrats .info {
     /* background: #b8b8b8; */
@@ -108,7 +108,7 @@ section {
     margin: 20px 40px;
     padding: 20px;
     border-radius: 20px;
-    font-size: 50px;
+    font-size: 20px;
     font-family: monospace;
     font-weight: bold;
 }
@@ -116,13 +116,14 @@ section {
 #congrats .header {
     background: red;
     color: white;
+    font-size: 20px;
 }
 
 #toy-img {
     margin: 0 auto;
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     left: 50%;
     position: absolute;
-    margin-left: -197px;
+    margin-left: -100px;
 }
