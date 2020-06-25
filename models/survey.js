@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     results: DataTypes.ARRAY(DataTypes.TEXT)
   }, {});
   survey.associate = function(models) {
-    // associations can be defined here
+    models.survey.belongsTo(models.survey_template);
   };
   return survey;
 };

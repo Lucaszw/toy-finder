@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js" integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script>
+        <script src="/api.js"></script>
+    </head>
+    <body>
+        <label for="category-input">Add category to survey:</label>
+        <input id="category-input" type="text" />
+        <button id="add-category-btn" >Add another category</button>
+        <ul id="category-list">
+        </ul>
+        <label for="survey-name">Survey Name:</label>
+        <input id="survey-name" type="text" />
+        <button id="submit-btn" >Create survey</button>
+    <script>
+        const categoryInput = document.querySelector("#category-input");
+        const categoryList = document.querySelector("#category-list");
+        const addCategoryBtn = document.querySelector("#add-category-btn");
+        const surveyNameInput = document.querySelector("#survey-name");
+        const submitBtn = document.querySelector("#submit-btn");
+
+        function addCategory() {
+            const category = categoryInput.value;
+            const listElement = document.createElement("li");
+            listElement.innerHTML = category;
+            categoryList.appendChild(listElement);
+            categoryInput.value = "";
+        }
+
+        async function createSurvey() {
+            const name = surveyNameInput.value;
+            const categoryListElements =  categoryList.querySelectorAll("li");
+            const categories = _.map(categoryListElements, "innerHTML");
+
+            let results = await API.postSurvey(name, categories);
+            console.log({results});
+        }
+
+
+        addCategoryBtn.onclick = addCategory;
+        submitBtn.onclick = createSurvey;
+    </script>
+    </body>
+</html>

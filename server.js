@@ -35,4 +35,9 @@ app.get('/trends', async (req, res) => {
     res.send(popularity);
 });
 
+app.post("/survey", async (req, res) => {
+    const {surveyName, surveyCategories} = req.body;
+    res.send("not implemented");
+});
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

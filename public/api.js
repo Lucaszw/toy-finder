@@ -23,5 +23,17 @@ API.getTrends = async () => {
         }
     }
     return await fetch(url, options).then(res => res.json())
+};
+
+API.postSurvey = async (surveyName, surveyCategories) => {
+    const url = '/survey';
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({surveyName, surveyCategories}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    return await fetch(url, options);
 }
 
