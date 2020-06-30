@@ -29,6 +29,9 @@ app.get('/trends/:surveyName', async (req, res) => {
             inner join survey_templates st on st.id = template_id
             where st.name = '${surveyName}'
         `;
+    else
+        optionalQuery = `where template_id is null`
+
     let [popularity] = await db.sequelize.query(`
         with categories as (
             select
