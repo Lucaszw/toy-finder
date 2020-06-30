@@ -1,8 +1,8 @@
 window.API = {};
 
-API.postResults = async (results) => {
+API.postResults = async (results, templateId) => {
     console.log({results}, JSON.stringify({results}));
-    const url = '/results';
+    const url = `/result/${templateId}`;
     const options = {
         method: 'POST',
         body: JSON.stringify({results}),
@@ -14,8 +14,8 @@ API.postResults = async (results) => {
     return await fetch(url, options).then(res => res.json())
 }
 
-API.getTrends = async () => {
-    const url = '/trends';
+API.getTrends = async (surveyName) => {
+    const url = `/trends/${surveyName}`;
     const options = {
         method: 'GET',
         headers: {
@@ -34,6 +34,27 @@ API.postSurvey = async (surveyName, surveyCategories) => {
             'Content-Type': 'application/json'
         }
     };
-    return await fetch(url, options);
-}
+    return await fetch(url, options).then(res => res.json())
+};
+
+API.getSurvey = async (surveyName) => {
+    const url = `/survey/${surveyName}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    return await fetch(url, options).then(res => res.json());
+};
+API.getSurveys = async () => {
+    const url = '/surveys';
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    return await fetch(url, options).then(res => res.json());
+};
 

@@ -8,8 +8,11 @@
         <canvas id="myChart"></canvas>
         <script>
             var ctx = document.getElementById('myChart').getContext('2d');
+            const urlParams = new URLSearchParams(window.location.search);
+            const surveyName = urlParams.get("surveyName");
 
-            API.getTrends().then((results) => {
+            API.getTrends(surveyName).then((results) => {
+                console.log({results});
                 let labels = _.map(results, "category");
                 let data = _.map(results, "popularity");
                 var chart = new Chart(ctx, {

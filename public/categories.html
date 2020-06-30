@@ -13,9 +13,12 @@
         <label for="survey-name">Survey Name:</label>
         <input id="survey-name" type="text" />
         <button id="submit-btn" >Create survey</button>
+        <ul id="existing-surveys">
+        </ul>
     <script>
         const categoryInput = document.querySelector("#category-input");
         const categoryList = document.querySelector("#category-list");
+        const existingSurveyList = document.querySelector("#existing-surveys");
         const addCategoryBtn = document.querySelector("#add-category-btn");
         const surveyNameInput = document.querySelector("#survey-name");
         const submitBtn = document.querySelector("#submit-btn");
@@ -32,14 +35,27 @@
             const name = surveyNameInput.value;
             const categoryListElements =  categoryList.querySelectorAll("li");
             const categories = _.map(categoryListElements, "innerHTML");
-
             let results = await API.postSurvey(name, categories);
-            console.log({results});
+            surveyNameInput.value = "";
+            loadExistingSurveys();
         }
 
+        async function loadExistingSurveys() {
+            let surveys = await API.getSurveys();
+            existingSurveyList.innerHTML = "";
+            for (let survey of surveys) {
+                const listElement = document.createElement("li");
+                const categories = _.join(survey.categories, ",");
+                listElement.innerHTML = `${survey.name}: (${categories}) / ${survey.surveys.length} results`;
+                existingSurveyList.appendChild(listElement);
+            }
+            console.log({surveys});
+        }
 
         addCategoryBtn.onclick = addCategory;
         submitBtn.onclick = createSurvey;
+
+        loadExistingSurveys();
     </script>
     </body>
 </html>

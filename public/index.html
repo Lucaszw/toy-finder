@@ -15,7 +15,7 @@
         <div id="main">
             <div id="pre-survey">
                 <div class="header">Welcome to toy finder!</div>
-                <div class="info" >We will determine the ultimate toy for you after answering the following questions</div>
+                <div class="info" >We will determine the ultimate toy you are looking for after the following questions</div>
                 <div id="begin-btn" class="begin-btn">Begin</div>
             </div>
             <div id="survey" class="container alpha">
@@ -53,7 +53,15 @@
         </div>
 
         <script>
-            let toyTypes = ["Action Figures", "Animals", "Cars", "Creative Toys", "Dolls", "Educational Toys", "Electronic Toys", "Video Games", "Model Building", "Puzzles", "Science", "Wooden Toys"];
+            let categoryNames = ["Action Figures", "Animals", "Cars", "Creative Toys", "Dolls", "Educational Toys", "Electronic Toys", "Video Games", "Model Building", "Puzzles", "Science", "Wooden Toys"];
+            let surveyTemplateId = null;
+            async function getCategories() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const surveyName = urlParams.get("surveyName");
+                const surveyTemplate = await API.getSurvey(surveyName);
+                categoryNames = surveyTemplate.categories;
+                surveyTemplateId = surveyTemplate.id;
+            }
             let toyCategories = {
                 baby: ["Dolls"],
                 batman: ["Action Figures", "Cars"],
@@ -142,7 +150,7 @@
                 let name = toyFullNames[bestToy];
                 bestToyContainer.innerHTML = name;
                 imgContainer.src = `/toys/${bestToy}.png`;
-                let results = await API.postResults(favouriteToys);
+                let results = await API.postResults(favouriteToys, surveyTemplateId);
             }
 
             function surveyComplete() {
@@ -154,10 +162,10 @@
             }
 
             function loadNextQuestion() {
-                let questionIndex = Math.floor(Math.random()*toyTypes.length);
-                let question1 = toyTypes[questionIndex];
-                let remainingTypes = _.without(toyTypes, question1);
-                let question2 = remainingTypes[Math.floor(Math.random()*(toyTypes.length-1))];
+                let questionIndex = Math.floor(Math.random()*categoryNames.length);
+                let question1 = categoryNames[questionIndex];
+                let remainingTypes = _.without(categoryNames, question1);
+                let question2 = remainingTypes[Math.floor(Math.random()*(categoryNames.length-1))];
 
                 answerBtns[0].innerHTML = question1;
                 answerBtns[1].innerHTML = question2;
@@ -182,6 +190,7 @@
                 });
 
                 progressBar.setProgress(0);
+                getCategories();
             }
             init();
 

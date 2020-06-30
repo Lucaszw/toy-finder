@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     categories: DataTypes.ARRAY(DataTypes.TEXT)
   }, {});
   surveyTemplate.associate = function(models) {
-    models.survey_template.hasMany(models.survey);
+    models.survey_template.hasMany(models.survey, {foreignKey: 'template_id'});
   };
   return surveyTemplate;
 };
